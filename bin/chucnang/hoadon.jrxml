@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hoadon" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47382392-c71d-4734-a785-cc91247ccd3d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (5)"/>
+	<parameter name="getmakhachhang" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT tbl_hang_hoa.ma_hang_hoa,
+	tbl_hang_hoa.ten_hang_hoa,
+	tbl_hoa_don.gia_tien,
+	tbl_hoa_don.so_luong_ban,
+	tbl_hoa_don.ma_hoa_don,
+	tbl_hoa_don.ma_khach_hang,
+	tbl_hoa_don.ngay_xuat_hoa_don,
+	tbl_hoa_don.phuong_thuc,
+	tbl_hoa_don.ma_nhan_vien,
+	 tbl_khach_hang.tong 
+FROM tbl_hang_hoa,
+	tbl_hoa_don
+inner join tbl_khach_hang ON 
+	 tbl_khach_hang.ma_khach_hang = tbl_hoa_don.ma_khach_hang 
+WHERE 
+	 tbl_hang_hoa.ma_hang_hoa = tbl_hoa_don.ma_hang_hoa and tbl_hoa_don.ma_khach_hang= $P{getmakhachhang}]]>
+	</queryString>
+	<field name="ma_hang_hoa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ma_hang_hoa"/>
+		<property name="com.jaspersoft.studio.field.label" value="ma_hang_hoa"/>
+	</field>
+	<field name="ten_hang_hoa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ten_hang_hoa"/>
+		<property name="com.jaspersoft.studio.field.label" value="ten_hang_hoa"/>
+	</field>
+	<field name="gia_tien" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="gia_tien"/>
+		<property name="com.jaspersoft.studio.field.label" value="gia_tien"/>
+	</field>
+	<field name="so_luong_ban" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="so_luong_ban"/>
+		<property name="com.jaspersoft.studio.field.label" value="so_luong_ban"/>
+	</field>
+	<field name="ma_hoa_don" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ma_hoa_don"/>
+		<property name="com.jaspersoft.studio.field.label" value="ma_hoa_don"/>
+	</field>
+	<field name="ma_khach_hang" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ma_khach_hang"/>
+		<property name="com.jaspersoft.studio.field.label" value="ma_khach_hang"/>
+	</field>
+	<field name="ngay_xuat_hoa_don" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="ngay_xuat_hoa_don"/>
+		<property name="com.jaspersoft.studio.field.label" value="ngay_xuat_hoa_don"/>
+	</field>
+	<field name="phuong_thuc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phuong_thuc"/>
+		<property name="com.jaspersoft.studio.field.label" value="phuong_thuc"/>
+	</field>
+	<field name="ma_nhan_vien" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ma_nhan_vien"/>
+		<property name="com.jaspersoft.studio.field.label" value="ma_nhan_vien"/>
+	</field>
+	<field name="tong" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="tong"/>
+		<property name="com.jaspersoft.studio.field.label" value="tong"/>
+	</field>
+	<variable name="ma_hoa_don1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{ma_hoa_don}]]></variableExpression>
+	</variable>
+	<variable name="tong1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{tong}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="29" width="230" height="30" uuid="9b23199a-a176-4ecd-b892-7436fbe911c2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="26"/>
+				</textElement>
+				<text><![CDATA[Cửa Hàng Tạp Hóa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="0" width="34" height="20" uuid="7033274a-1aa4-4b41-a544-a0dec4ae8536"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[ID:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="474" y="0" width="36" height="20" uuid="8ddf7c5f-2a2a-478e-bed6-c8c443ed4c4b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ma_hoa_don}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="117" height="30" uuid="6a160e43-add5-479e-9e46-ccb53b5e38f6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Tên Sản Phẩm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="40" width="90" height="30" uuid="36dbc9f7-eea1-41c9-bbec-ae64461489fd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Số Lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="40" width="100" height="30" uuid="2081810d-75cd-4af1-a422-4824640dd405"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Giá Tiền]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="140" height="30" uuid="13b4bc7d-423c-4308-a352-0f35a9031de9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0cb2fb1-9707-4966-8c95-0398d54b4d5c"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ten_hang_hoa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="22" width="90" height="30" uuid="200528a3-2780-4959-bb68-64595a66ab31">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd34f42b-727a-4e99-ba1a-359587bafbb7"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{so_luong_ban}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="20" width="100" height="30" uuid="7386ca9e-41f9-4f6a-a850-9ccec35fd54d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3890cfbd-b198-44cd-be6d-cfdca80cb12e"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gia_tien}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement x="360" y="41" width="50" height="30" uuid="e626ff5f-812a-464e-b545-1784950470d3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Tổng:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="40" width="120" height="30" uuid="9466906d-2980-4a9a-aec8-6d9ae991ba81"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tong}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="170" y="20" width="190" height="30" uuid="5a9892bc-6ed3-4dce-9050-e37f1fea89bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Cảm ơn bạn đã mua hàng]]></text>
+			</staticText>
+			<textField pattern="M/d/yy h:mm a">
+				<reportElement x="410" y="40" width="100" height="30" uuid="8a8636b9-17a7-441a-a2be-251ad6cbc210"/>
+				<textElement>
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
