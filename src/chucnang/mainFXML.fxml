@@ -72,7 +72,7 @@
                <center>
                   <AnchorPane prefHeight="600.0" prefWidth="1161.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="ac_tongquan" layoutX="64.0" layoutY="40.0" prefHeight="600.0" prefWidth="1266.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_tongquan" layoutX="64.0" layoutY="40.0" prefHeight="600.0" prefWidth="1266.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="189.0" prefWidth="847.0" stylesheets="@mainFormDesign.css" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -257,7 +257,7 @@
                               <Separator layoutX="8.0" layoutY="362.0" prefHeight="0.0" prefWidth="851.0" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="17.59999999999991" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="8.0" layoutY="8.0" prefHeight="582.0" prefWidth="480.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="8.0">
                                  <styleClass>
@@ -306,7 +306,7 @@
                                     <Label layoutX="67.0" layoutY="436.0" text="SĐT Kh:" AnchorPane.bottomAnchor="126.39999999999998" AnchorPane.rightAnchor="262.59999999999997" />
                                     <TextField fx:id="banhang_sdtkh" layoutX="155.0" layoutY="435.0" AnchorPane.bottomAnchor="119.4" AnchorPane.rightAnchor="65.79999999999998" />
                                     <Label layoutX="65.0" layoutY="478.0" text="Giới Tính:" AnchorPane.bottomAnchor="84.39999999999998" AnchorPane.rightAnchor="254.99999999999997" />
-                                    <TextField fx:id="banhang_gt" layoutX="155.0" layoutY="477.0" AnchorPane.bottomAnchor="77.4" AnchorPane.rightAnchor="65.79999999999998" />
+                                    <ComboBox fx:id="banhang_gt1" layoutX="160.0" layoutY="473.0" prefHeight="26.0" prefWidth="135.0" promptText="chọn" />
                                  </children>
                               </AnchorPane>
                            </children>

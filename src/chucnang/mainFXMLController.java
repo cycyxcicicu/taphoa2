@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -263,8 +264,7 @@ public class mainFXMLController implements Initializable {
     @FXML
     private TextField banhang_sdtkh;
     
-    @FXML
-    private TextField banhang_gt;
+    
     
 
     @FXML
@@ -302,6 +302,8 @@ public class mainFXMLController implements Initializable {
     @FXML
     private Label thunhap;
     
+    @FXML
+    private ComboBox<?> banhang_gt1;
 
     @FXML
     private AreaChart<?, ?> bieudo;
@@ -881,7 +883,7 @@ public class mainFXMLController implements Initializable {
 		banhang_tblv.setItems(menuOrderListData);
 	}
 
-	private BigDecimal totalP;
+	private BigDecimal totalP = new BigDecimal(0);
 //tính tổng tiền mua
 	public void menuGetTotal() {
 		   customerID();
@@ -918,11 +920,11 @@ public class mainFXMLController implements Initializable {
 	
 public void menuPayBtn() {
         
-        if (totalP.compareTo(BigDecimal.ZERO) == 0) {
+        if (totalP == null) {
             alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
-            alert.setContentText("chọn dơn hàng của bạn !");
+            alert.setContentText("Khách chưa mua hàng (!'!) ");
             alert.showAndWait();
         } else if(banhang_pthuc.getSelectionModel().getSelectedItem() == null){
         	alert = new Alert(AlertType.ERROR);
@@ -969,7 +971,7 @@ public void menuPayBtn() {
                         
                         
                         prepare.setString(3,banhang_tkh.getText() );
-                        prepare.setString(4, banhang_gt.getText());
+                        prepare.setString(4, (String) banhang_gt1.getSelectionModel().getSelectedItem());
                         prepare.setBigDecimal(5, totalP);
                         
                         
@@ -1002,12 +1004,20 @@ public void menuPayBtn() {
     }
 public void menuReceiptBtn() {
     
-    if (totalP.compareTo(BigDecimal.ZERO) == 0 || banhang_tkt.getText().isEmpty()) {
+    if (totalP == null ) {
         alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setContentText("chưa mua hàng");
         alert.showAndWait();
-    } else {
+    } 
+    else if(banhang_tkt.getText().isEmpty())
+    {
+    	alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Message");
+        alert.setContentText("Chưa Nhập tiền khách trả");
+        alert.showAndWait();
+    }
+    else {
     	
         HashMap map = new HashMap();
         map.put("getmakhachhang", (cID - 1));
@@ -1058,7 +1068,16 @@ public void menuRemoveBtn() {
         alert.setHeaderText(null);
         alert.setContentText("chọn món đồ muốn xóa");
         alert.showAndWait();
-    } else {
+    }else if (totalP==null)
+    {
+    	alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Message");
+        alert.setHeaderText(null);
+        alert.setContentText("Khách chưa mưa hàng");
+        alert.showAndWait();
+    	
+    }
+    else {
         String deleteData = "DELETE FROM tbl_hoa_don WHERE ma_hoa_don = " + getid;
         connect = database.connectdb();
         try {
@@ -1090,36 +1109,63 @@ public void menuRestart() {
     banhang_ttl.setText("0.0đ");
     banhang_tkh.setText("");
     banhang_sdtkh.setText("");
-    banhang_gt.setText("");
+    banhang_gt1.getSelectionModel().clearSelection();
 }
     
-	 private BigDecimal amount;
-	 private BigDecimal change;
+	 private BigDecimal amount= new BigDecimal(0);
+	 private BigDecimal change= new BigDecimal(0);
+	
+
 	 
 	 //tính tiền trả lại
 	public void menuAmount() {
         menuGetTotal();
-        if (banhang_tkt.getText().isEmpty() || totalP.compareTo(BigDecimal.ZERO) == 0) {
+        if (banhang_tkt.getText().isEmpty() ) {
             alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
-            alert.setContentText("Invalid :3");
+            alert.setContentText("Nhập tiền khách trả :3");
             alert.showAndWait();
-        } else {
-        	
+        } else if(totalP == null) {
+        	alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Khách chưa mua hàng :3");
+            alert.showAndWait();
+        }
+        else {
+        	try {
         	
             amount = new BigDecimal(banhang_tkt.getText());
+            
             if (amount.compareTo(totalP)<0) {
-            	banhang_tkt.setText("trả thiếu");
-            } else {
+            	alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Khách Trả Thiếu");
+                alert.showAndWait();
+            }
+            else {
                 change = amount.subtract(totalP);
                 banhang_ttl.setText( change+"đ");
             }
+        	}
+        	catch (NumberFormatException e)
+        	{
+        		alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("vui lòng nhập lại");
+                alert.showAndWait();
+        	}
         }
     }
 	//hiển thị tổng tiền
 	public void menuDisplayTotal() {
 		menuGetTotal();
+		if(totalP == null) {
+			banhang_tong.setText("0.0đ");
+		}else
 		banhang_tong.setText(totalP+"đ");
 	}
 
@@ -1364,7 +1410,7 @@ public void tongthunhap() {
     
     int month = calendar.get(java.util.Calendar.MONTH)+1;
    
-    String sql = "SELECT sum (tong) as tong FROM tbl_khach_hang,tbl_hoa_don where tbl_khach_hang.ma_khach_hang=tbl_hoa_don.ma_khach_hang and month( tbl_hoa_don.ngay_xuat_hoa_don)="+month;
+    String sql = "SELECT sum(tong) as tong FROM tbl_khach_hang where tong in(SELECT DISTINCT tong  FROM tbl_khach_hang  INNER JOIN tbl_hoa_don ON tbl_khach_hang.ma_khach_hang=tbl_hoa_don.ma_khach_hang and MONTH(ngay_xuat_hoa_don)="+month+")";
     
     connect = database.connectdb();
     
@@ -1409,7 +1455,8 @@ public void daban() {
 }
 
 	private String[] typeList = { "tiền mặt", "chuyển khoản" };
-
+	private String[] typeList1 = { "Nam", "Nữ" };
+	
 	public void inventoryTypeList() {
 
 		List<String> typeL = new ArrayList<>();
@@ -1422,6 +1469,18 @@ public void daban() {
 
 		banhang_pthuc.setItems(listData);
 	}
+	public void inventoryTypeList1() {
+
+		List<String> typeL = new ArrayList<>();
+
+		for (String data : typeList1) {
+			typeL.add(data);
+		}
+
+		ObservableList listData = FXCollections.observableArrayList(typeL);
+
+		banhang_gt1.setItems(listData);
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -1430,7 +1489,7 @@ public void daban() {
 		inventoryTypeList();
 		timkiemhd();
 		hienthidatahanghoa();
-
+		inventoryTypeList1();
 		menuDisplayCard();
 		menuGetOrder();
 		menuShowOrderData();
