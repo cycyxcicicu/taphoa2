@@ -150,6 +150,8 @@ public class mainFXMLController implements Initializable {
 
 	@FXML
 	private TextField hanghoa_sl;
+	
+	
 
 //    @FXML
 //    private TableColumn<?, ?> hanghoa_tblv_dv1;
@@ -883,7 +885,7 @@ public class mainFXMLController implements Initializable {
 		banhang_tblv.setItems(menuOrderListData);
 	}
 
-	private BigDecimal totalP = new BigDecimal(0);
+	private BigDecimal totalP ;
 //tính tổng tiền mua
 	public void menuGetTotal() {
 		   customerID();
@@ -898,6 +900,7 @@ public class mainFXMLController implements Initializable {
 
 			if (result.next()) {
 				totalP = result.getBigDecimal("giatien");
+				System.out.println(totalP+"2345");
 			}
 
 		} catch (Exception e) {
@@ -906,6 +909,8 @@ public class mainFXMLController implements Initializable {
 
 	}
 	 private int getid;
+	 private int soluongban;
+	 private String ma;
 	public void menuSelectOrder() {
         hoadondata prod = banhang_tblv.getSelectionModel().getSelectedItem();
         int num = banhang_tblv.getSelectionModel().getSelectedIndex();
@@ -915,7 +920,8 @@ public class mainFXMLController implements Initializable {
         }
         // trả về ma hóa đơn 
         getid = prod.getMahoadon();
-        
+        soluongban=prod.getSoluongban();
+        ma=prod.getMahanghoa();
     }
 	
 public void menuPayBtn() {
@@ -933,6 +939,13 @@ public void menuPayBtn() {
             alert.setContentText("chọn phương thức thanh toán !");
             alert.showAndWait();
         	
+        }
+        else if(banhang_tkt.getText().isEmpty())
+        {
+        	alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setContentText("Chưa Nhập tiền khách trả");
+            alert.showAndWait();
         }
         	else {
         		getData.phuongthuc=(String) banhang_pthuc.getSelectionModel().getSelectedItem();
@@ -1007,7 +1020,7 @@ public void menuReceiptBtn() {
     if (totalP == null ) {
         alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
-        alert.setContentText("chưa mua hàng");
+        alert.setContentText("chưa mua hàng ");
         alert.showAndWait();
     } 
     else if(banhang_tkt.getText().isEmpty())
@@ -1062,18 +1075,18 @@ public void dashboardIncomeChart() {
 }
 public void menuRemoveBtn() {
     
-    if (getid == 0) {
-        alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error Message");
-        alert.setHeaderText(null);
-        alert.setContentText("chọn món đồ muốn xóa");
-        alert.showAndWait();
-    }else if (totalP==null)
-    {
+    if (totalP==null) {
     	alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
         alert.setContentText("Khách chưa mưa hàng");
+        alert.showAndWait();
+    }else if (getid == 0)
+    {
+    	alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Message");
+        alert.setHeaderText(null);
+        alert.setContentText("chọn món đồ muốn xóa");
         alert.showAndWait();
     	
     }
@@ -1092,7 +1105,50 @@ public void menuRemoveBtn() {
                 prepare.executeUpdate();
             }
             
+            int checkStck = 0;
+            String checkStock = "SELECT so_luong_trong_kho FROM tbl_hang_hoa WHERE ma_hang_hoa = '"
+                    + ma + "'";
+
+            prepare = connect.prepareStatement(checkStock);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                checkStck = result.getInt("so_luong_trong_kho");
+            }
+            
+            String update="UPDATE tbl_hang_hoa SET  so_luong_trong_kho= ? where ma_hang_hoa=?";
+            prepare = connect.prepareStatement(update);
+            
+            int tong=checkStck+soluongban;
+            
+            prepare.setInt(1, tong);
+
+			prepare.setString(2, ma);
+			
+			
+			prepare.executeUpdate();
+            
+            menuDisplayTotal();
+            
             menuShowOrderData();
+            if(!banhang_tkt.getText().isEmpty())
+            {	
+            amount = new BigDecimal(banhang_tkt.getText());
+            
+            if(totalP==null)
+            {
+            	menuRestart();
+            }
+            else {
+                change = amount.subtract(totalP);
+                banhang_ttl.setText( change+"đ");
+            }
+            }
+            if(totalP==null)
+            {
+            	menuRestart();
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1120,17 +1176,18 @@ public void menuRestart() {
 	 //tính tiền trả lại
 	public void menuAmount() {
         menuGetTotal();
-        if (banhang_tkt.getText().isEmpty() ) {
+        if (totalP == null ) {
             alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
-            alert.setContentText("Nhập tiền khách trả :3");
+            alert.setContentText("Khách chưa mua hàng :3");
             alert.showAndWait();
-        } else if(totalP == null) {
+        } 
+        else if(banhang_tkt.getText().isEmpty())
+        {
         	alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Khách chưa mua hàng :3");
+            alert.setContentText("Chưa Nhập tiền khách trả");
             alert.showAndWait();
         }
         else {
@@ -1162,11 +1219,16 @@ public void menuRestart() {
     }
 	//hiển thị tổng tiền
 	public void menuDisplayTotal() {
+		try {
 		menuGetTotal();
 		if(totalP == null) {
 			banhang_tong.setText("0.0đ");
 		}else
 		banhang_tong.setText(totalP+"đ");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private ObservableList<hanghoadata> cardListData = FXCollections.observableArrayList();
@@ -1192,7 +1254,7 @@ public void menuRestart() {
 				cardhanghoaController cardC = load.getController();
 				cardC.setData(cardListData.get(q));
 
-				if (column == 3) {
+				if (column == 5) {
 					column = 0;
 					row += 1;
 				}
@@ -1490,6 +1552,7 @@ public void daban() {
 		timkiemhd();
 		hienthidatahanghoa();
 		inventoryTypeList1();
+		
 		menuDisplayCard();
 		menuGetOrder();
 		menuShowOrderData();
@@ -1503,6 +1566,8 @@ public void daban() {
         displaythunhaphomnay() ;
         
         dashboardIncomeChart();
+        
+       
 
 	}
 

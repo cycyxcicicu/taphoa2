@@ -300,6 +300,9 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
     @FXML
     private TextField timkiemhd;
     
+    @FXML
+    private ComboBox<?> banhang_gt1;
+    
     private Connection connect;
 	private PreparedStatement prepare;
 	private Statement statement;
@@ -1001,6 +1004,7 @@ public void switchForm(ActionEvent event) {
     }
 public void membersDelete() {
 	super.membersDelete();
+	
 }
 public void membersUpdate() {
 	super.membersUpdate();
@@ -1030,8 +1034,11 @@ public void menuReceiptBtn() {
 	public void initialize(URL location, ResourceBundle resources) {
 		inventoryShowData2();
 		inventoryShowData1();
+		
 		timkiemnv();
+		
 		timkiemncc();
+		super.inventoryTypeList1();
 		super.timkiemhh();
 		super.inventoryTypeList();
 		super.timkiemhd();

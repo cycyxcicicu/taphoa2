@@ -142,7 +142,7 @@
                               <Separator prefHeight="0.0" prefWidth="851.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="10.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_banhang" prefHeight="601.0" prefWidth="874.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_banhang" prefHeight="601.0" prefWidth="874.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="8.0" layoutY="10.0" prefHeight="582.0" prefWidth="480.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="391.0" AnchorPane.topAnchor="10.0">
                                  <styleClass>
@@ -191,7 +191,7 @@
                                     <Label layoutX="67.0" layoutY="436.0" text="SĐT Kh:" AnchorPane.bottomAnchor="126.39999999999998" AnchorPane.rightAnchor="262.59999999999997" />
                                     <TextField fx:id="banhang_sdtkh" layoutX="155.0" layoutY="435.0" AnchorPane.bottomAnchor="119.4" AnchorPane.rightAnchor="65.79999999999998" />
                                     <Label layoutX="65.0" layoutY="478.0" text="Giới Tính:" AnchorPane.bottomAnchor="84.39999999999998" AnchorPane.rightAnchor="254.99999999999997" />
-                                    <TextField fx:id="banhang_gt" layoutX="155.0" layoutY="477.0" AnchorPane.bottomAnchor="77.4" AnchorPane.rightAnchor="65.79999999999998" />
+                                    <ComboBox fx:id="banhang_gt1" layoutX="160.0" layoutY="459.0" prefHeight="26.0" prefWidth="135.0" promptText="chọn" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -271,7 +271,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_tongquan" prefHeight="600.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_tongquan" prefHeight="600.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="13.0" prefHeight="189.0" prefWidth="847.0" stylesheets="@mainFormDesign.css" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="0.0">
                                  <children>

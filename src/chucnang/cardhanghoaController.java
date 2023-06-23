@@ -167,10 +167,6 @@ public class cardhanghoaController implements Initializable{
                     
                     int upStock = checkStck - qty;
 
-                    
-
-                    
-
                     String updateStock = "UPDATE tbl_hang_hoa SET ten_hang_hoa = N'"
                             + hanghoa_name.getText() + "', so_luong_trong_kho =  "+upStock+", gia_ban = " + pr
                             + ", image = '"
@@ -188,13 +184,13 @@ public class cardhanghoaController implements Initializable{
                     alert.showAndWait();
                     
                    mForm.menuGetTotal();
-                  
-
-
-                  
+                   
+                   
                 }
+                
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
         }
         
