@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javafx.collections.FXCollections;
@@ -35,6 +36,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -120,6 +122,11 @@ public class mainFXMLController implements Initializable {
 
 	@FXML
 	private TableView<hoadondata> banhang_tblv;
+	
+	public TableView<hoadondata> getBanhang_tblv() {
+        return banhang_tblv;
+    }
+	
 
 	@FXML
 	private TableColumn<hoadondata, String> banhang_tblv_gt;
@@ -212,8 +219,8 @@ public class mainFXMLController implements Initializable {
 	@FXML
 	private AnchorPane main_from;
 
-	@FXML
-	private TextField hanghoa_msp;
+//	@FXML
+//	private TextField hanghoa_msp;
 
 //	@FXML
 //	private DatePicker hanghoa_nhh;
@@ -230,8 +237,9 @@ public class mainFXMLController implements Initializable {
 	@FXML
 	private TextField hanghoa_dv;
 
-	@FXML
-	private TextField hanghoa_ncc;
+	/*
+	 * @FXML private TextField hanghoa_ncc;
+	 */
 
 	@FXML
 	private TextField hanghoa_gb;
@@ -267,8 +275,9 @@ public class mainFXMLController implements Initializable {
     private TextField banhang_sdtkh;
     
     
+    @FXML
+    private ComboBox<String> hanghoa_ncc;
     
-
     @FXML
     private TableView<hoadondata> hoadon;
 
@@ -313,6 +322,10 @@ public class mainFXMLController implements Initializable {
 
     @FXML
     private TextField timkiemhd;
+    
+    
+    
+    
 
 	private Connection connect;
 	private PreparedStatement prepare;
@@ -417,9 +430,7 @@ public class mainFXMLController implements Initializable {
 		connect = database.connectdb();
 
 		try {
-			if (hanghoa_msp.getText().isEmpty()) {
-				inventoryClearBtn();
-			} else {
+			
 				alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
@@ -428,7 +439,7 @@ public class mainFXMLController implements Initializable {
 
 				if (option.get().equals(ButtonType.OK)) {
 					prepare = connect.prepareStatement(sql);
-					prepare.setString(1, hanghoa_msp.getText());
+					prepare.setString(1, mahanghoa);
 					prepare.executeUpdate();
 
 					alert = new Alert(Alert.AlertType.INFORMATION);
@@ -447,23 +458,51 @@ public class mainFXMLController implements Initializable {
 					alert.setContentText("Hủy xóa!!");
 					alert.showAndWait();
 				}
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void membersUpdate() {
-		String sql = "UPDATE tbl_hang_hoa SET ma_hang_hoa = ?,ten_hang_hoa=?,so_luong_trong_kho =?,gia_ban=?,ma_nha_cung_cap =?,don_vi=?,image=? WHERE ma_hang_hoa=?";
+		
 
-		connect = database.connectdb();
+		if ( hanghoa_tsp.getText().isEmpty()
+				|| hanghoa_sl.getText().isEmpty() 
+				|| hanghoa_ncc.getSelectionModel().getSelectedItem()==null
+				|| hanghoa_gb.getText().isEmpty()
+				|| hanghoa_dv.getText().isEmpty()
+				|| getData.path == null) 
+		{
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Message");
+			alert.setHeaderText(null);
+			alert.setContentText("Nhập đầy đủ thông tin ");
+			alert.showAndWait();
+		}
+		else {
+			try {
+				giaban=new BigDecimal( hanghoa_gb.getText());
+				soluong=new Integer (hanghoa_sl.getText());
+				String numberString = String.valueOf(soluong);
+				boolean isValid = numberString.matches("\\d+");
+				 if(giaban.compareTo(BigDecimal.ZERO)<0) {
+					alert = new Alert(AlertType.ERROR);
+		            alert.setTitle("Error Message");
+		            alert.setHeaderText(null);
+		            alert.setContentText("Giá bán không thể âm ");
+		            alert.showAndWait();
+				}else if(!isValid)
+				{
+					alert = new Alert(AlertType.ERROR);
+		            alert.setTitle("Error Message");
+		            alert.setHeaderText(null);
+		            alert.setContentText("Giá bán không thể âm ");
+		            alert.showAndWait();
+				}else {
+			
+			try {
 
-		try {
-			Alert alert;
-
-			if (hanghoa_msp.getText().isEmpty()) {
-				inventoryClearBtn();
-			} else {
 				alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
@@ -471,26 +510,27 @@ public class mainFXMLController implements Initializable {
 				Optional<ButtonType> option = alert.showAndWait();
 
 				if (option.get().equals(ButtonType.OK)) {
+				  
+				String sql = "UPDATE tbl_hang_hoa SET ma_hang_hoa = ?,ten_hang_hoa=?,so_luong_trong_kho =?,gia_ban=?,ma_nha_cung_cap =?,don_vi=?,image=? WHERE ma_hang_hoa=?";
+
+				connect = database.connectdb();
+				
+
 					prepare = connect.prepareStatement(sql);
 					String path = getData.path;
 					path = path.replace("\\", "\\\\");
 
-					prepare.setString(1, hanghoa_msp.getText());
+					prepare.setString(1, mahanghoa);
 
 					prepare.setString(2, hanghoa_tsp.getText());
 					prepare.setString(3, hanghoa_sl.getText());
 
 					prepare.setString(4, hanghoa_gb.getText());
-					// prepare.setString(4,
-					// java.sql.Date.valueOf(hanghoa_nhh.getValue()).toString());
-					// prepare.setInt(5, Integer.parseInt(hanghoa_sln.getText()));
-					// prepare.setString(6,hanghoa_gn.getText());
-					// prepare.setString(7,
-					// java.sql.Date.valueOf(hanghoa_nsx.getValue()).toString());
-					prepare.setString(5, hanghoa_ncc.getText());
+					
+					prepare.setString(5, hanghoa_ncc.getSelectionModel().getSelectedItem());
 					prepare.setString(6, hanghoa_dv.getText());
 					prepare.setString(7, path);
-					prepare.setString(8, hanghoa_msp.getText());
+					prepare.setString(8, mahanghoa);
 
 					prepare.executeUpdate();
 
@@ -499,11 +539,10 @@ public class mainFXMLController implements Initializable {
 					alert.setHeaderText(null);
 					alert.setContentText("Cập nhật thành công!");
 					alert.showAndWait();
-
-					hienthidatahanghoa();
+					
 					timkiemhh();
+					hienthidatahanghoa();
 					inventoryClearBtn();
-
 				} else {
 					alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Information Message");
@@ -511,12 +550,26 @@ public class mainFXMLController implements Initializable {
 					alert.setContentText("Hủy Cập Nhật!!");
 					alert.showAndWait();
 				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+				
+			
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			}
+			}
+			catch (NumberFormatException e)
+	    	{
+	    		alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Error Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("vui lòng nhập lại");
+	            alert.showAndWait();
+	    	}}
+	}
+private String mahanghoa;
+private BigDecimal giaban;
+private int soluong;
 	public void hanghoaSelectData() {
 
 		hanghoadata prodData = hanghoa_tblv.getSelectionModel().getSelectedItem();
@@ -525,51 +578,59 @@ public class mainFXMLController implements Initializable {
 		if ((num - 1) < -1) {
 			return;
 		}
-
-		hanghoa_msp.setText(prodData.getMahanghoa());
+		
+		mahanghoa=prodData.getMahanghoa();
 		hanghoa_tsp.setText(prodData.getTenhanghoa());
-		hanghoa_ncc.setText(prodData.getManhacungcap());
-		// hanghoa_sln.setText(String.valueOf(prodData.getSoluongnhap()));
+		hanghoa_ncc.setValue(prodData.getManhacungcap());
 		hanghoa_sl.setText(String.valueOf(prodData.getSoluongtrongkho()));
 		hanghoa_gb.setText(String.valueOf(prodData.getGiaban()));
-		// hanghoa_gn.setText(String.valueOf(prodData.getGianhap()));
-		// hanghoa_nsx.setValue(prodData.getNgaysanxuat().toLocalDate());
-		// hanghoa_nhh.setValue(prodData.getNgaysanxuat().toLocalDate());
 		hanghoa_dv.setText(prodData.getDonvi());
-
 		getData.path = prodData.getImage();
-
 		String path = "File:" + prodData.getImage();
-//	        data.date = String.valueOf(prodData.getDate());
-//	        data.id = prodData.getId();
-
 		image = new Image(path, 137, 144, false, true);
 		hanghoa_imageview.setImage(image);
 	}
 
 	public void hanghoathemBtn() {
 		// kiểm tra xem các ô đã ghi hết chưa
-		if (hanghoa_msp.getText().isEmpty() || hanghoa_tsp.getText().isEmpty()
-		// || hanghoa_nsx.getValue() ==null
-				|| hanghoa_sl.getText().isEmpty() || hanghoa_ncc.getText().isEmpty()
-				// || hanghoa_sln.getText().isEmpty()
-				// || hanghoa_nhh.getValue()== null
+		
+		if ( hanghoa_tsp.getText().isEmpty()
+				|| hanghoa_sl.getText().isEmpty() 
+				|| hanghoa_ncc.getSelectionModel().getSelectedItem()==null
 				|| hanghoa_gb.getText().isEmpty()
-				// ||hanghoa_gn.getText().isEmpty()
 				|| hanghoa_dv.getText().isEmpty()
-
-				|| getData.path == null) {
-
+				|| getData.path == null) 
+		{
 			alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Message");
 			alert.setHeaderText(null);
-			alert.setContentText("Please fill all blank fields");
+			alert.setContentText("Nhập đầy đủ thông tin ");
 			alert.showAndWait();
-
-		} else {
-
+		}
+		else {
+			try {
+				giaban=new BigDecimal( hanghoa_gb.getText());
+				soluong=new Integer (hanghoa_sl.getText());
+				String numberString = String.valueOf(soluong);
+				boolean isValid = numberString.matches("\\d+");
+				 if(giaban.compareTo(BigDecimal.ZERO)<0) {
+					alert = new Alert(AlertType.ERROR);
+		            alert.setTitle("Error Message");
+		            alert.setHeaderText(null);
+		            alert.setContentText("Giá bán không thể âm ");
+		            alert.showAndWait();
+				}else if(!isValid)
+				{
+					alert = new Alert(AlertType.ERROR);
+		            alert.setTitle("Error Message");
+		            alert.setHeaderText(null);
+		            alert.setContentText("Giá bán không thể âm ");
+		            alert.showAndWait();
+				}else {
+			
+			
 			// CHECK mã hàng hóa
-			String checkmahanghoa = "SELECT ma_hang_hoa FROM tbl_hang_hoa WHERE ma_hang_hoa = '" + hanghoa_msp.getText()
+			String checkmahanghoa = "SELECT ma_hang_hoa FROM tbl_hang_hoa WHERE ma_hang_hoa = '" + mahanghoa
 					+ "'";
 
 			connect = database.connectdb();
@@ -578,13 +639,13 @@ public class mainFXMLController implements Initializable {
 
 				statement = connect.createStatement();
 				result = statement.executeQuery(checkmahanghoa);
-
+				
 				if (result.next()) {
 					alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Error Message");
 					alert.setHeaderText(null);
 
-					alert.setContentText(hanghoa_msp.getText() + " is already taken");
+					alert.setContentText(mahanghoa + " is already taken");
 					alert.showAndWait();
 				} else {
 					String insertData = "INSERT INTO tbl_hang_hoa "
@@ -592,23 +653,15 @@ public class mainFXMLController implements Initializable {
 							+ "VALUES(?,?,?,?,?,?,?,?)";
 
 					prepare = connect.prepareStatement(insertData);
-					prepare.setString(1, hanghoa_msp.getText());
+					prepare.setString(1, generateID1());
 					prepare.setString(2, hanghoa_tsp.getText());
 					prepare.setString(3, hanghoa_sl.getText());
-					prepare.setString(4, hanghoa_ncc.getText());
-					// prepare.setString(4, hanghoa_sln.getText());
-					// prepare.setString(5, hanghoa_gn.getText());
-					// prepare.setString(6, (String) hanghoa_nsx.getValue().toString());
-					// prepare.setString(7, (String) hanghoa_nhh.getValue().toString());
+					prepare.setString(4,  (String)hanghoa_ncc.getSelectionModel().getSelectedItem());
 					prepare.setString(5, hanghoa_gb.getText());
 					prepare.setString(6, hanghoa_dv.getText());
-
 					String path = getData.path;
 					path = path.replace("\\", "\\\\");
-
 					prepare.setString(7, path);
-
-					// ĐỂ NHẬN NGÀY HIỆN TẠI
 					Date date = new Date();
 					java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
@@ -626,28 +679,40 @@ public class mainFXMLController implements Initializable {
 					hienthidatahanghoa();
 					inventoryClearBtn();
 				}
+				
+			
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+			}
+			}
+			catch (NumberFormatException e)
+	    	{
+	    		alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Error Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("vui lòng nhập lại");
+	            alert.showAndWait();
+	    	}}
 	}
+	private static final int ID_LENGTH = 5;
+    public  String generateID1() {
+        UUID uuid = UUID.randomUUID();
+        long hash = uuid.getLeastSignificantBits();
+        hash = hash != Long.MIN_VALUE ? Math.abs(hash) : 0;
+        String id = Long.toString(hash, 36);
+        return id.substring(0, Math.min(id.length(), ID_LENGTH )).toUpperCase();
+    }
 
 //xóa dữ liệu đang hiện trên các ô
 	public void inventoryClearBtn() {
-
-		hanghoa_msp.setText("");
+		mahanghoa="";
 		hanghoa_tsp.setText("");
-		hanghoa_ncc.setText("");
+		hanghoa_ncc.getSelectionModel().clearSelection();
 		hanghoa_sl.setText("");
-		// hanghoa_sln.setText("");
 		hanghoa_gb.setText("");
-		// hanghoa_gn.setText("");
 		hanghoa_dv.setText("");
-
-		// hanghoa_nsx.setValue(null);
-		// hanghoa_nhh.setValue(null);
-
 		getData.path = "";
 
 		hanghoa_imageview.setImage(null);
@@ -900,8 +965,9 @@ public class mainFXMLController implements Initializable {
 
 			if (result.next()) {
 				totalP = result.getBigDecimal("giatien");
-				System.out.println(totalP+"2345");
+				
 			}
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -923,10 +989,10 @@ public class mainFXMLController implements Initializable {
         soluongban=prod.getSoluongban();
         ma=prod.getMahanghoa();
     }
-	
+	String sdt;
 public void menuPayBtn() {
         
-        if (totalP == null) {
+        if (totalP == null||totalP.compareTo(BigDecimal.ZERO)==0) {
             alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
@@ -963,9 +1029,23 @@ public void menuPayBtn() {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error Messaged");
                     alert.setHeaderText(null);
-                    alert.setContentText("tiền khách trả:3");
+                    alert.setContentText("nhập tiền khách trả:3");
                     alert.showAndWait();
-                } else {
+                } else if(!banhang_sdtkh.getText().isEmpty()){
+                	sdt=banhang_sdtkh.getText();
+                	boolean isValid = sdt.matches("\\d{10}");
+                	if (!isValid) {
+                		alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Error Messaged");
+                        alert.setHeaderText(null);
+                        alert.setContentText("nhập lại sdt");
+                        alert.showAndWait();
+                    } 
+                	
+                
+                
+                	else {
+                
                     alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Message");
                     alert.setHeaderText(null);
@@ -1007,7 +1087,7 @@ public void menuPayBtn() {
                         alert.setContentText("Cancelled.");
                         alert.showAndWait();
                     }
-                }
+                }}
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1017,7 +1097,7 @@ public void menuPayBtn() {
     }
 public void menuReceiptBtn() {
     
-    if (totalP == null ) {
+    if (totalP == null ||totalP.compareTo(BigDecimal.ZERO)==0) {
         alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setContentText("chưa mua hàng ");
@@ -1075,7 +1155,7 @@ public void dashboardIncomeChart() {
 }
 public void menuRemoveBtn() {
     
-    if (totalP==null) {
+    if (totalP==null||totalP.compareTo(BigDecimal.ZERO)==0) {
     	alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
@@ -1176,7 +1256,7 @@ public void menuRestart() {
 	 //tính tiền trả lại
 	public void menuAmount() {
         menuGetTotal();
-        if (totalP == null ) {
+        if (totalP == null ||totalP.compareTo(BigDecimal.ZERO)==0) {
             alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
@@ -1217,6 +1297,7 @@ public void menuRestart() {
         	}
         }
     }
+	
 	//hiển thị tổng tiền
 	public void menuDisplayTotal() {
 		try {
@@ -1250,8 +1331,11 @@ public void menuRestart() {
 			try {
 				FXMLLoader load = new FXMLLoader();
 				load.setLocation(getClass().getResource("cardhanghoa.fxml"));
+				
 				AnchorPane pane = load.load();
 				cardhanghoaController cardC = load.getController();
+				
+				
 				cardC.setData(cardListData.get(q));
 
 				if (column == 5) {
@@ -1543,7 +1627,27 @@ public void daban() {
 
 		banhang_gt1.setItems(listData);
 	}
-
+	
+	public void inventoryTypeList2() {
+		ObservableList<String> options = FXCollections.observableArrayList();
+		String sql =" select ma_nha_cung_cap from tbl_nha_cung_cap  ";
+		connect = database.connectdb();
+		try {
+		prepare = connect.prepareStatement(sql);
+        result = prepare.executeQuery();
+		while (result.next()) {
+		    String name = result.getString("ma_nha_cung_cap");
+		    options.add(name);
+		}
+		
+		hanghoa_ncc.setItems(options);
+		}
+		catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		displayUsername();
@@ -1552,7 +1656,7 @@ public void daban() {
 		timkiemhd();
 		hienthidatahanghoa();
 		inventoryTypeList1();
-		
+		inventoryTypeList2();
 		menuDisplayCard();
 		menuGetOrder();
 		menuShowOrderData();

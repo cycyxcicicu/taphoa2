@@ -3,9 +3,9 @@ package chucnang;
 public class nhacungcapdata {
 	private String manhacungcap;
 	private String tennhacungcap;
-	private Integer sodienthoainhacungcap;
+	private String sodienthoainhacungcap;
 
-	public nhacungcapdata(String manhacungcap, String tennhacungcap, Integer sodienthoainhacungcap) {
+	public nhacungcapdata(String manhacungcap, String tennhacungcap, String sodienthoainhacungcap) {
 		this.manhacungcap = manhacungcap;
 		this.tennhacungcap = tennhacungcap;
 		this.sodienthoainhacungcap = sodienthoainhacungcap;
@@ -19,7 +19,7 @@ public class nhacungcapdata {
 		return tennhacungcap;
 	}
 
-	public Integer getSodienthoainhacungcap() {
+	public String getSodienthoainhacungcap() {
 		return sodienthoainhacungcap;
 	}
 }

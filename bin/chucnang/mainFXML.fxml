@@ -223,17 +223,14 @@
                                           <String fx:value="white-bg" />
                                        </styleClass>
                                        <children>
-                                          <Label layoutX="17.0" layoutY="19.0" text="Mã SP :" AnchorPane.leftAnchor="17.0" />
-                                          <TextField fx:id="hanghoa_msp" layoutX="82.0" layoutY="15.0" prefHeight="26.0" prefWidth="110.0" />
-                                          <Label layoutX="24.0" layoutY="75.0" text="Tên SP :" AnchorPane.leftAnchor="24.0" />
-                                          <TextField fx:id="hanghoa_tsp" layoutX="90.0" layoutY="70.0" prefHeight="26.0" prefWidth="110.0" />
-                                          <Label layoutX="223.0" layoutY="19.0" text="Giá Bán :" AnchorPane.leftAnchor="223.0" />
-                                          <TextField fx:id="hanghoa_gb" layoutX="308.0" layoutY="19.0" prefHeight="26.0" prefWidth="110.0" />
-                                          <Label layoutX="247.0" layoutY="76.0" text="Tên NCC :" AnchorPane.leftAnchor="247.0" />
-                                          <TextField fx:id="hanghoa_ncc" layoutX="345.0" layoutY="71.0" prefHeight="26.0" prefWidth="82.0" />
-                                          <Button fx:id="hanghoa_thembtn" layoutX="66.0" layoutY="167.0" mnemonicParsing="false" onAction="#hanghoathemBtn" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Thêm" />
-                                          <Button fx:id="hanghoa_suabtn" layoutX="234.0" layoutY="167.0" mnemonicParsing="false" onAction="#membersUpdate" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Sửa" />
-                                          <Button fx:id="hanghoa_xoabtn" layoutX="383.0" layoutY="167.0" mnemonicParsing="false" onAction="#membersDelete" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Xóa" />
+                                          <Label layoutX="23.0" layoutY="23.0" text="Tên SP :" />
+                                          <TextField fx:id="hanghoa_tsp" layoutX="81.0" layoutY="19.0" prefHeight="26.0" prefWidth="110.0" />
+                                          <Label layoutX="223.0" layoutY="19.0" text="Giá Bán :" />
+                                          <TextField fx:id="hanghoa_gb" layoutX="308.0" layoutY="19.0" prefHeight="26.0" prefWidth="118.0" />
+                                          <Label layoutX="220.0" layoutY="76.0" text="Tên NCC :" />
+                                          <Button fx:id="hanghoa_thembtn" layoutX="66.0" layoutY="167.0" mnemonicParsing="false" onAction="#hanghoathemBtn" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Thêm" AnchorPane.bottomAnchor="9.800000000000004" />
+                                          <Button fx:id="hanghoa_suabtn" layoutX="234.0" layoutY="167.0" mnemonicParsing="false" onAction="#membersUpdate" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Sửa" AnchorPane.bottomAnchor="9.800000000000004" />
+                                          <Button fx:id="hanghoa_xoabtn" layoutX="383.0" layoutY="167.0" mnemonicParsing="false" onAction="#membersDelete" prefHeight="25.0" prefWidth="70.0" styleClass="btn" text="Xóa" AnchorPane.bottomAnchor="9.800000000000004" />
                                           <AnchorPane layoutX="707.0" layoutY="9.0" prefHeight="144.0" prefWidth="137.0" stylesheets="@mainFormDesign.css" AnchorPane.rightAnchor="8.199999999999932">
                                              <styleClass>
                                                 <String fx:value="white-bg" />
@@ -243,13 +240,14 @@
                                                 <ImageView fx:id="hanghoa_imageview" fitHeight="144.0" fitWidth="137.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
                                              </children>
                                           </AnchorPane>
-                                          <Button fx:id="hanghoa_thabtn" layoutX="740.0" layoutY="167.0" mnemonicParsing="false" onAction="#inventoryImportBtn" styleClass="btn" text="Tải Hình Ảnh" AnchorPane.rightAnchor="15.199999999999932" />
-                                          <TextField fx:id="hanghoa_dv" layoutX="542.0" layoutY="19.0" prefHeight="26.0" prefWidth="70.0" />
+                                          <Button fx:id="hanghoa_thabtn" layoutX="725.0" layoutY="167.0" mnemonicParsing="false" onAction="#inventoryImportBtn" styleClass="btn" text="Tải Hình Ảnh" AnchorPane.rightAnchor="28.59999999999991" />
+                                          <TextField fx:id="hanghoa_dv" layoutX="535.0" layoutY="19.0" prefHeight="26.0" prefWidth="77.0" />
                                           <Label layoutX="453.0" layoutY="24.0" text="Đơn Vị :" />
-                                          <Button fx:id="hanghoa_lm" layoutX="540.0" layoutY="167.0" mnemonicParsing="false" onAction="#inventoryClearBtn" prefHeight="22.0" prefWidth="74.0" styleClass="btn" stylesheets="@mainFormDesign.css" text="Làm Mới" />
-                                          <Label layoutX="453.0" layoutY="76.0" text="Số Lượng:" />
-                                          <TextField fx:id="hanghoa_sl" layoutX="542.0" layoutY="72.0" prefHeight="26.0" prefWidth="70.0" />
+                                          <Button fx:id="hanghoa_lm" layoutX="540.0" layoutY="167.0" mnemonicParsing="false" onAction="#inventoryClearBtn" prefHeight="22.0" prefWidth="74.0" styleClass="btn" stylesheets="@mainFormDesign.css" text="Làm Mới" AnchorPane.bottomAnchor="9.800000000000004" />
+                                          <Label layoutX="21.0" layoutY="76.0" text="Số Lượng:" />
+                                          <TextField fx:id="hanghoa_sl" layoutX="105.0" layoutY="71.0" prefHeight="26.0" prefWidth="75.0" />
                                           <TextField fx:id="timkiem" layoutX="84.0" layoutY="122.0" prefHeight="26.0" prefWidth="533.0" promptText="Nhập thông tin tìm kiếm" />
+                                          <ComboBox fx:id="hanghoa_ncc" layoutX="309.0" layoutY="72.0" prefHeight="32.0" prefWidth="118.0" promptText="Chọn" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -257,7 +255,7 @@
                               <Separator layoutX="8.0" layoutY="362.0" prefHeight="0.0" prefWidth="851.0" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="17.59999999999991" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="8.0" layoutY="8.0" prefHeight="582.0" prefWidth="480.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="8.0">
                                  <styleClass>
@@ -290,35 +288,35 @@
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                     </TableView>
-                                    <TextField fx:id="banhang_tkt" layoutX="169.0" layoutY="290.0" onAction="#menuAmount" prefHeight="26.0" prefWidth="161.0" promptText="0.0 vnđ" AnchorPane.bottomAnchor="263.6" AnchorPane.rightAnchor="39.799999999999955" />
-                                    <Label layoutX="107.0" layoutY="262.0" text="Tổng:" AnchorPane.bottomAnchor="300.4" AnchorPane.rightAnchor="232.99999999999997" />
-                                    <Label layoutX="73.0" layoutY="294.0" text="Tiền khách trả:" AnchorPane.bottomAnchor="268.4" AnchorPane.rightAnchor="219.79999999999998" />
-                                    <Label layoutX="83.0" layoutY="331.0" text="Tiền trả lại:" AnchorPane.bottomAnchor="231.39999999999998" AnchorPane.rightAnchor="228.99999999999997" />
+                                    <TextField fx:id="banhang_tkt" layoutX="169.0" layoutY="290.0" onAction="#menuAmount" prefHeight="26.0" prefWidth="151.0" promptText="0.0 vnđ" AnchorPane.bottomAnchor="264.0" AnchorPane.rightAnchor="50.0" />
+                                    <Label layoutX="57.0" layoutY="261.0" text="Tổng:" AnchorPane.bottomAnchor="301.4" AnchorPane.rightAnchor="283.0" />
+                                    <Label layoutX="57.0" layoutY="294.0" text="Tiền khách trả:" AnchorPane.bottomAnchor="268.4" AnchorPane.rightAnchor="235.79999999999998" />
+                                    <Label layoutX="53.0" layoutY="331.0" text="Tiền trả lại:" AnchorPane.bottomAnchor="231.39999999999998" AnchorPane.rightAnchor="259.0" />
                                     <Button fx:id="banhang_ttbtn" layoutX="107.0" layoutY="517.0" mnemonicParsing="false" onAction="#menuPayBtn" prefHeight="30.0" prefWidth="99.0" styleClass="btn" stylesheets="@mainFormDesign.css" text="Thanh toán" AnchorPane.bottomAnchor="32.60000000000002" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="108.0" />
                                     <Button fx:id="banhang_hdbtn" layoutX="273.0" layoutY="517.0" mnemonicParsing="false" onAction="#menuReceiptBtn" styleClass="btn" stylesheets="@mainFormDesign.css" text="Hóa Đơn" AnchorPane.bottomAnchor="33.39999999999998" AnchorPane.rightAnchor="22.19999999999999" />
                                     <Button fx:id="banhang_xbtn" layoutX="24.0" layoutY="517.0" mnemonicParsing="false" onAction="#menuRemoveBtn" prefHeight="30.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainFormDesign.css" text="Xóa" AnchorPane.bottomAnchor="32.60000000000002" AnchorPane.leftAnchor="24.0" />
-                                    <Label fx:id="banhang_tong" layoutX="153.0" layoutY="261.0" prefHeight="18.0" prefWidth="128.0" text="0.0 vnđ" AnchorPane.bottomAnchor="300.6" AnchorPane.rightAnchor="89.39999999999998" />
-                                    <Label fx:id="banhang_ttl" layoutX="148.0" layoutY="331.0" prefHeight="18.0" prefWidth="138.0" text="0.0 vnđ" AnchorPane.bottomAnchor="230.60000000000002" AnchorPane.rightAnchor="84.0" />
-                                    <ComboBox fx:id="banhang_pthuc" layoutX="176.0" layoutY="358.0" prefHeight="26.0" prefWidth="135.0" promptText="chọn" AnchorPane.bottomAnchor="195.60000000000002" AnchorPane.rightAnchor="59.19999999999999" />
-                                    <Label layoutX="58.0" layoutY="362.0" text="Phương thức" AnchorPane.bottomAnchor="200.39999999999998" AnchorPane.rightAnchor="243.59999999999997" />
-                                    <Label layoutX="65.0" layoutY="400.0" text="Tên Kh:" AnchorPane.bottomAnchor="162.39999999999998" AnchorPane.rightAnchor="266.2" />
-                                    <TextField fx:id="banhang_tkh" layoutX="153.0" layoutY="399.0" AnchorPane.bottomAnchor="155.4" AnchorPane.rightAnchor="67.79999999999998" />
-                                    <Label layoutX="67.0" layoutY="436.0" text="SĐT Kh:" AnchorPane.bottomAnchor="126.39999999999998" AnchorPane.rightAnchor="262.59999999999997" />
-                                    <TextField fx:id="banhang_sdtkh" layoutX="155.0" layoutY="435.0" AnchorPane.bottomAnchor="119.4" AnchorPane.rightAnchor="65.79999999999998" />
-                                    <Label layoutX="65.0" layoutY="478.0" text="Giới Tính:" AnchorPane.bottomAnchor="84.39999999999998" AnchorPane.rightAnchor="254.99999999999997" />
-                                    <ComboBox fx:id="banhang_gt1" layoutX="160.0" layoutY="473.0" prefHeight="26.0" prefWidth="135.0" promptText="chọn" />
+                                    <Label fx:id="banhang_tong" layoutX="171.0" layoutY="260.0" prefHeight="18.0" prefWidth="128.0" text="0.0 vnđ" AnchorPane.bottomAnchor="301.6" AnchorPane.rightAnchor="71.39999999999998" />
+                                    <Label fx:id="banhang_ttl" layoutX="166.0" layoutY="330.0" prefHeight="18.0" prefWidth="138.0" text="0.0 vnđ" AnchorPane.bottomAnchor="231.60000000000002" AnchorPane.rightAnchor="66.0" />
+                                    <ComboBox fx:id="banhang_pthuc" layoutX="167.0" layoutY="357.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" AnchorPane.bottomAnchor="197.0" AnchorPane.rightAnchor="49.0" />
+                                    <Label layoutX="58.0" layoutY="362.0" text="Phương thức:" AnchorPane.bottomAnchor="200.39999999999998" AnchorPane.rightAnchor="243.59999999999997" />
+                                    <Label layoutX="53.0" layoutY="403.0" text="Tên Kh:" AnchorPane.bottomAnchor="159.39999999999998" AnchorPane.rightAnchor="278.2" />
+                                    <TextField fx:id="banhang_tkh" layoutX="167.0" layoutY="399.0" prefHeight="26.0" prefWidth="155.0" AnchorPane.bottomAnchor="155.0" AnchorPane.rightAnchor="48.0" />
+                                    <Label layoutX="52.0" layoutY="439.0" text="SĐT Kh:" AnchorPane.bottomAnchor="123.39999999999998" AnchorPane.rightAnchor="277.59999999999997" />
+                                    <TextField fx:id="banhang_sdtkh" layoutX="167.0" layoutY="435.0" prefHeight="26.0" prefWidth="155.0" AnchorPane.bottomAnchor="119.0" AnchorPane.rightAnchor="48.0" />
+                                    <Label layoutX="47.0" layoutY="477.0" text="Giới Tính:" AnchorPane.bottomAnchor="85.39999999999998" AnchorPane.rightAnchor="273.0" />
+                                    <ComboBox fx:id="banhang_gt1" layoutX="167.0" layoutY="472.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_hoadon" layoutX="11.0" prefHeight="600.0" prefWidth="869.0" stylesheets="@mainFormDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_hoadon" layoutX="11.0" prefHeight="600.0" prefWidth="869.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="radius" />
                               <String fx:value="shadow" />
                               <String fx:value="white-bg" />
                            </styleClass>
                            <children>
-                              <TextField fx:id="timkiemhd" layoutX="238.0" layoutY="36.0" prefHeight="26.0" prefWidth="370.0" promptText="Nhập Thông Tin Tìm Kiếm" />
+                              <TextField fx:id="timkiemhd" layoutX="272.0" layoutY="30.0" prefHeight="26.0" prefWidth="370.0" promptText="Nhập Thông Tin Tìm Kiếm" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="226.39999999999998" />
                               <TableView fx:id="hoadon" layoutY="82.0" prefHeight="518.0" prefWidth="869.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="82.0">
                                 <columns>
                                   <TableColumn fx:id="hoadon_tkh" prefWidth="143.19998168945312" text="Tên Khách Hàng" />

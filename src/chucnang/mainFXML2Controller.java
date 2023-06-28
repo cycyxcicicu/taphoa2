@@ -128,9 +128,7 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
     @FXML
     private TextField hanghoa_msp;
 
-    @FXML
-    private TextField hanghoa_ncc;
-
+  
     @FXML
     private TextField hanghoa_sl;
 
@@ -209,8 +207,7 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
     @FXML
     private Button logout_btn;
 
-    @FXML
-    private TextField ncc_ma;
+   
 
     @FXML
     private TextField ncc_sdt;
@@ -253,6 +250,9 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
     
 
     @FXML
+    private ComboBox<?> hanghoa_ncc;
+
+    @FXML
     private TableView<nhanviendata> tableview_nv;
 
     @FXML
@@ -286,8 +286,8 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
     @FXML
     private TextField nhanvien_hvt;
 
-    @FXML
-    private TextField nhanvien_mnv;
+//    @FXML
+//    private TextField nhanvien_mnv;
 
     @FXML
     private TextField nhanvien_pass;
@@ -315,8 +315,8 @@ public class mainFXML2Controller extends mainFXMLController  implements Initiali
 public void inventoryAddBtn1() {
 	
         
-        if (ncc_ma.getText().isEmpty()
-                || ncc_ten.getText().isEmpty()
+        if (
+                 ncc_ten.getText().isEmpty()
                 || ncc_sdt.getText().isEmpty()) {
             
             alert = new Alert(AlertType.ERROR);
@@ -325,36 +325,31 @@ public void inventoryAddBtn1() {
             alert.setContentText("Hãy điền đầy đủ thông tin");
             alert.showAndWait();
             
-        } else {
+        } else if(!ncc_sdt.getText().isEmpty()){
+        	sdt=ncc_sdt.getText();
+        	boolean isValid = sdt.matches("\\d{10}");
+        	if (!isValid) {
+        		alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Messaged");
+                alert.setHeaderText(null);
+                alert.setContentText("nhập lại sdt");
+                alert.showAndWait();
+            } 
+        	else {
 
-            // CHECK PRODUCT ID
-            String checkProdID = "SELECT ma_nha_cung_cap FROM tbl_nha_cung_cap WHERE ma_nha_cung_cap = '"
-                    + ncc_ma.getText() + "'";
             
             connect = database.connectdb();
             
             try {
-                
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkProdID);
-                
-                if (result.next()) {
-                    alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText(ncc_ma.getText() + " hãy nhập mã nhà cung cấp khác ");
-                    alert.showAndWait();
-                } else {
                     String insertData = "INSERT INTO tbl_nha_cung_cap "
                             + "(ma_nha_cung_cap, ten_nha_cung_cap, so_dien_thoai_ncc) "
                             + "VALUES(?,?,?)";
                     
                     prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, ncc_ma.getText());
+                    prepare.setString(1,super.generateID1());
                     prepare.setString(2, ncc_ten.getText());
                     
                     prepare.setString(3, ncc_sdt.getText());
-                    
                     
                     prepare.executeUpdate();
                     
@@ -367,18 +362,20 @@ public void inventoryAddBtn1() {
                     inventoryShowData1();
                     inventoryClearBtn1();
                     timkiemncc();
-                }
+                    super.inventoryTypeList2();
+                
                 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        	}
         }
     }
     
 public void inventoryUpdateBtn1() {
         
-        if (ncc_ma.getText().isEmpty()
-                || ncc_ten.getText().isEmpty()
+        if (
+                 ncc_ten.getText().isEmpty()
                 || ncc_sdt.getText().isEmpty()) {
             
             alert = new Alert(AlertType.ERROR);
@@ -387,12 +384,20 @@ public void inventoryUpdateBtn1() {
             alert.setContentText("Hãy điền đầy đủ thông tin");
             alert.showAndWait();
             
-        } else {
-            
-            
+        } else if(!ncc_sdt.getText().isEmpty()){
+        	sdt=ncc_sdt.getText();
+        	boolean isValid = sdt.matches("\\d{10}");
+        	if (!isValid) {
+        		alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Messaged");
+                alert.setHeaderText(null);
+                alert.setContentText("nhập lại sdt");
+                alert.showAndWait();
+            } 
+        	else {
             
             String updateData = "UPDATE tbl_nha_cung_cap SET "
-                    + "ma_nha_cung_cap = '" + ncc_ma.getText() 
+                    + "ma_nha_cung_cap = '" + mancc 
                     + "', ten_nha_cung_cap = N'"
                     + ncc_ten.getText() 
                     + "', so_dien_thoai_ncc = "
@@ -406,7 +411,7 @@ public void inventoryUpdateBtn1() {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("BẠn muốn sửa thông tin nhà cung cấp có mã : " + ncc_ma.getText() + "?");
+                alert.setContentText("BẠn muốn sửa thông tin nhà cung cấp có mã : " + mancc + "?");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 if (option.get().equals(ButtonType.OK)) {
@@ -431,8 +436,10 @@ public void inventoryUpdateBtn1() {
                     alert.setContentText("Cancelled.");
                     alert.showAndWait();
                 }
+                
             } catch (Exception e) {
                 e.printStackTrace();
+            }
             }
         }
     }
@@ -450,7 +457,7 @@ public void inventoryUpdateBtn1() {
             alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
-            alert.setContentText("Bạn muốn xóa nhà cung cấp có mã: " + ncc_ma.getText() + "?");
+            alert.setContentText("Bạn muốn xóa nhà cung cấp có mã: " + mancc + "?");
             Optional<ButtonType> option = alert.showAndWait();
             
             if (option.get().equals(ButtonType.OK)) {
@@ -485,12 +492,13 @@ public void inventoryUpdateBtn1() {
     }
 public void inventoryClearBtn1() {
         
-	ncc_ma.setText("");
+	
 	ncc_ten.setText("");
 	ncc_sdt.setText("");
 	getData.mancc="";
         
     }
+String mancc;
 public void inventorySelectData1() {
         
 	nhacungcapdata prodData = tableview_ncc.getSelectionModel().getSelectedItem();
@@ -500,7 +508,7 @@ public void inventorySelectData1() {
             return;
         }
         
-        ncc_ma.setText(prodData.getManhacungcap());
+        mancc=prodData.getManhacungcap();
         ncc_ten.setText(prodData.getTennhacungcap());
         ncc_sdt.setText(String.valueOf(prodData.getSodienthoainhacungcap()));
         
@@ -527,7 +535,7 @@ public ObservableList<nhacungcapdata> inventoryDataList() {
             	prodData = new nhacungcapdata(
             			result.getString("ma_nha_cung_cap"),
                         result.getString("ten_nha_cung_cap"),
-                        result.getInt("so_dien_thoai_ncc"));
+                        result.getString("so_dien_thoai_ncc"));
                 
                 listData.add(prodData);
                 
@@ -604,8 +612,8 @@ public void inventoryShowData2() {
     
 }
 public void inventoryClearBtn2() {
-
-	nhanvien_mnv.setText("");
+	manhanvien1="";
+	//nhanvien_mnv.setText("");
 	nhanvien_gt.setText("");
 	nhanvien_pass.setText("");
 	nhanvien_dc.setText("");
@@ -615,6 +623,7 @@ public void inventoryClearBtn2() {
 	nhanvien_sdt.setText("");
 
 }
+private String manhanvien1;
 public void hanghoaSelectData2() {
 
 	nhanviendata prodData = tableview_nv.getSelectionModel().getSelectedItem();
@@ -623,8 +632,8 @@ public void hanghoaSelectData2() {
 	if ((num - 1) < -1) {
 		return;
 	}
-
-	nhanvien_mnv.setText(prodData.getManhanvien());
+	manhanvien1=prodData.getManhanvien();
+	//nhanvien_mnv.setText(prodData.getManhanvien());
 	nhanvien_gt.setText(prodData.getGioitinh());
 	nhanvien_pass.setText(prodData.getPassword());
 	
@@ -635,9 +644,10 @@ public void hanghoaSelectData2() {
 
 	
 }
+
 public void nhanvienthemBtn() {
 	// kiểm tra xem các ô đã ghi hết chưa
-	if (nhanvien_mnv.getText().isEmpty() || nhanvien_sdt.getText().isEmpty()
+	if (/*nhanvien_mnv.getText().isEmpty() ||*/ nhanvien_sdt.getText().isEmpty()
 	
 			|| nhanvien_pass.getText().isEmpty() || nhanvien_dc.getText().isEmpty()
 			
@@ -648,36 +658,32 @@ public void nhanvienthemBtn() {
 		alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Message");
 		alert.setHeaderText(null);
-		alert.setContentText("Please fill all blank fields");
+		alert.setContentText("Nhập đầy đủ thông tin");
 		alert.showAndWait();
 
-	} else {
+	} else if(!nhanvien_sdt.getText().isEmpty()){
+    	sdt=nhanvien_sdt.getText();
+    	boolean isValid = sdt.matches("\\d{10}");
+    	if (!isValid) {
+    		alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Messaged");
+            alert.setHeaderText(null);
+            alert.setContentText("nhập lại sdt");
+            alert.showAndWait();
+        } 
+    	else {
 
-		// CHECK mã hàng hóa
-		String checknhanvien = "SELECT ma_nhan_vien FROM tbl_nhan_vien WHERE ma_nhan_vien = '" + nhanvien_mnv.getText()
-				+ "'";
-
+		
 		connect = database.connectdb();
 
 		try {
-
-			statement = connect.createStatement();
-			result = statement.executeQuery(checknhanvien);
-
-			if (result.next()) {
-				alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error Message");
-				alert.setHeaderText(null);
-
-				alert.setContentText(nhanvien_mnv.getText() + " Đã có ");
-				alert.showAndWait();
-			} else {
+			
 				String insertData = "INSERT INTO tbl_nhan_vien "
 						+ "(ma_nhan_vien ,ten_nhan_vien,so_dien_thoai_nv,gioi_tinh_nv,dia_chi ,password) "
 						+ "VALUES(?,?,?,?,?,?)";
 
 				prepare = connect.prepareStatement(insertData);
-				prepare.setString(1, nhanvien_mnv.getText());
+				prepare.setString(1, super.generateID1());
 				prepare.setString(2, nhanvien_hvt.getText());
 				prepare.setString(3, nhanvien_sdt.getText());
 				prepare.setString(4, nhanvien_gt.getText());
@@ -698,22 +704,22 @@ public void nhanvienthemBtn() {
 				inventoryShowData2();
 				inventoryClearBtn2();
 				timkiemnv();
-			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}}
 	}
 }
 public void membersDelete2() {
 	String sql = "DELETE FROM tbl_nhan_vien WHERE ma_nhan_vien = ?";
 
 	connect = database.connectdb();
+	
+	
 
 	try {
-		if (nhanvien_mnv.getText().isEmpty()) {
-			inventoryClearBtn2();
-		} else {
+		
 			alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Confirmation Message");
 			alert.setHeaderText(null);
@@ -722,7 +728,7 @@ public void membersDelete2() {
 
 			if (option.get().equals(ButtonType.OK)) {
 				prepare = connect.prepareStatement(sql);
-				prepare.setString(1, nhanvien_mnv.getText());
+				prepare.setString(1, manhanvien1);
 				prepare.executeUpdate();
 
 				alert = new Alert(Alert.AlertType.INFORMATION);
@@ -741,7 +747,7 @@ public void membersDelete2() {
 				alert.setContentText("Hủy xóa!!");
 				alert.showAndWait();
 			}
-		}
+		
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
@@ -750,13 +756,35 @@ public void membersUpdate2() {
 	String sql = "UPDATE tbl_nhan_vien SET ma_nhan_vien = ?,ten_nhan_vien=?,so_dien_thoai_nv =?,gioi_tinh_nv=?,dia_chi =?,password=? WHERE ma_nhan_vien=?";
 
 	connect = database.connectdb();
+	if (/*nhanvien_mnv.getText().isEmpty() ||*/ nhanvien_sdt.getText().isEmpty()
+			
+			|| nhanvien_pass.getText().isEmpty() || nhanvien_dc.getText().isEmpty()
+			
+			|| nhanvien_hvt.getText().isEmpty()
+			
+			|| nhanvien_gt.getText().isEmpty()) {
+
+		alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error Message");
+		alert.setHeaderText(null);
+		alert.setContentText("Nhập đầy đủ thông tin");
+		alert.showAndWait();
+
+	} else if(!nhanvien_sdt.getText().isEmpty()){
+    	sdt=nhanvien_sdt.getText();
+    	boolean isValid = sdt.matches("\\d{10}");
+    	if (!isValid) {
+    		alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Messaged");
+            alert.setHeaderText(null);
+            alert.setContentText("nhập lại sdt");
+            alert.showAndWait();
+        } 
+    	else {
 
 	try {
 		Alert alert;
 
-		if (nhanvien_mnv.getText().isEmpty()) {
-			inventoryClearBtn2();
-		} else {
 			alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Confirmation Message");
 			alert.setHeaderText(null);
@@ -767,7 +795,7 @@ public void membersUpdate2() {
 				prepare = connect.prepareStatement(sql);
 				
 
-				prepare.setString(1, nhanvien_mnv.getText());
+				prepare.setString(1, manhanvien1);
 
 				prepare.setString(2, nhanvien_hvt.getText());
 				prepare.setString(3, nhanvien_sdt.getText());
@@ -776,7 +804,7 @@ public void membersUpdate2() {
 				
 				prepare.setString(5, nhanvien_dc.getText());
 				prepare.setString(6, nhanvien_pass.getText());
-				prepare.setString(7, nhanvien_mnv.getText());
+				prepare.setString(7, manhanvien1);
 
 				prepare.executeUpdate();
 
@@ -798,10 +826,12 @@ public void membersUpdate2() {
 				alert.setContentText("Hủy Cập Nhật!!");
 				alert.showAndWait();
 			}
-		}
+		
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
+	}
+    	}
 }
 
 public void timkiemnv() {
@@ -893,24 +923,7 @@ public void timkiemncc() {
     public void logout() {
     	
 		try {
-//			alert = new Alert(AlertType.CONFIRMATION);
-//			alert.setTitle("Error Message");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Bạn có chắc chắn bạn muốn thoát?");
-//			Optional<ButtonType> option = alert.showAndWait();
-//			if (option.get().equals(ButtonType.OK)) {
-//
-//				// ĐỂ ẨN MẪU CHÍNH
-//				logout_btn.getScene().getWindow().hide();
-//
-//				// LIÊN KẾT MẪU ĐĂNG NHẬP VÀ HIỂN THỊ
-//				Parent root = FXMLLoader.load(getClass().getResource("loginFXML.fxml"));
-//
-//				Stage stage = new Stage();
-//				Scene scene = new Scene(root);
-//
-//				stage.setScene(scene);
-//				stage.show();}
+		
 			super.logout();
 			
 		} catch (Exception e) {
@@ -1034,7 +1047,7 @@ public void menuReceiptBtn() {
 	public void initialize(URL location, ResourceBundle resources) {
 		inventoryShowData2();
 		inventoryShowData1();
-		
+		super.inventoryTypeList2();
 		timkiemnv();
 		
 		timkiemncc();
