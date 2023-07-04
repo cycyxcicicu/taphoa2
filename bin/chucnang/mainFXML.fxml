@@ -32,7 +32,7 @@
                      <children>
                         <AnchorPane layoutX="14.0" prefHeight="81.0" prefWidth="227.0" stylesheets="@mainFormDesign.css" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="38.0" layoutY="40.0" text="Cửa Hàng Tạp Hóa" textFill="#df90c4">
+                              <Label layoutX="38.0" layoutY="40.0" text="Cửa Hàng Tạp Hóa" textFill="#6e1616">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -44,7 +44,7 @@
                               <String fx:value="radius" />
                            </styleClass>
                         </AnchorPane>
-                        <Button fx:id="tongquan_btn" layoutX="24.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="182.0" styleClass="nav-btn" text="Tổng Quan" />
+                        <Button fx:id="tongquan_btn" layoutX="24.0" layoutY="230.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="182.0" styleClass="nav-btn" text="Tổng Quan" />
                         <Button fx:id="kholuutru_btn" layoutX="24.0" layoutY="300.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="183.0" styleClass="nav-btn" text="Kho Lưu Trữ" />
                         <Button fx:id="banhang_btn" layoutX="24.0" layoutY="379.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="182.0" styleClass="nav-btn" text="Bán Hàng" />
                         <Button fx:id="hoadon_btn" layoutX="20.0" layoutY="455.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="181.0" styleClass="nav-btn" text="Hóa Đơn" />
@@ -60,7 +60,10 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Label fx:id="ten_labl" alignment="CENTER" layoutX="39.0" layoutY="169.0" prefHeight="18.0" prefWidth="144.0" text="Tên" />
+                        <Label fx:id="ten_labl" alignment="CENTER" layoutX="39.0" layoutY="169.0" prefHeight="18.0" prefWidth="144.0" text="Tên" textFill="#6e1616">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
                      </children>
                      <styleClass>
                         <String fx:value="shadow" />
@@ -255,7 +258,7 @@
                               <Separator layoutX="8.0" layoutY="362.0" prefHeight="0.0" prefWidth="851.0" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="17.59999999999991" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_banhang" prefHeight="600.0" prefWidth="876.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="8.0" layoutY="8.0" prefHeight="582.0" prefWidth="480.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="8.0">
                                  <styleClass>
@@ -277,7 +280,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="560.0" layoutY="9.0" prefHeight="580.0" prefWidth="370.0" styleClass="shadow" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="9.0">
                                  <children>
-                                    <TableView fx:id="banhang_tblv" layoutX="4.0" onMouseClicked="#menuSelectOrder" prefHeight="266.0" prefWidth="310.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="333.6" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.800000000000011" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="banhang_tblv" editable="true" layoutX="4.0" onMouseClicked="#menuSelectOrder" prefHeight="266.0" prefWidth="310.0" styleClass="white-bg" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="333.6" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.800000000000011" AnchorPane.topAnchor="0.0">
                                       <columns>
                                         <TableColumn fx:id="banhang_tblv_msp" prefWidth="55.200010776519775" text="Mã SP" />
                                         <TableColumn fx:id="banhang_tblv_tsp" prefWidth="98.40003204345703" text="Tên SP" />
@@ -297,19 +300,19 @@
                                     <Button fx:id="banhang_xbtn" layoutX="24.0" layoutY="517.0" mnemonicParsing="false" onAction="#menuRemoveBtn" prefHeight="30.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainFormDesign.css" text="Xóa" AnchorPane.bottomAnchor="32.60000000000002" AnchorPane.leftAnchor="24.0" />
                                     <Label fx:id="banhang_tong" layoutX="171.0" layoutY="260.0" prefHeight="18.0" prefWidth="128.0" text="0.0 vnđ" AnchorPane.bottomAnchor="301.6" AnchorPane.rightAnchor="71.39999999999998" />
                                     <Label fx:id="banhang_ttl" layoutX="166.0" layoutY="330.0" prefHeight="18.0" prefWidth="138.0" text="0.0 vnđ" AnchorPane.bottomAnchor="231.60000000000002" AnchorPane.rightAnchor="66.0" />
-                                    <ComboBox fx:id="banhang_pthuc" layoutX="167.0" layoutY="357.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" AnchorPane.bottomAnchor="197.0" AnchorPane.rightAnchor="49.0" />
+                                    <ComboBox fx:id="banhang_pthuc" layoutX="167.0" layoutY="357.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" AnchorPane.bottomAnchor="196.60000000000002" AnchorPane.rightAnchor="49.0" />
                                     <Label layoutX="58.0" layoutY="362.0" text="Phương thức:" AnchorPane.bottomAnchor="200.39999999999998" AnchorPane.rightAnchor="243.59999999999997" />
                                     <Label layoutX="53.0" layoutY="403.0" text="Tên Kh:" AnchorPane.bottomAnchor="159.39999999999998" AnchorPane.rightAnchor="278.2" />
                                     <TextField fx:id="banhang_tkh" layoutX="167.0" layoutY="399.0" prefHeight="26.0" prefWidth="155.0" AnchorPane.bottomAnchor="155.0" AnchorPane.rightAnchor="48.0" />
                                     <Label layoutX="52.0" layoutY="439.0" text="SĐT Kh:" AnchorPane.bottomAnchor="123.39999999999998" AnchorPane.rightAnchor="277.59999999999997" />
                                     <TextField fx:id="banhang_sdtkh" layoutX="167.0" layoutY="435.0" prefHeight="26.0" prefWidth="155.0" AnchorPane.bottomAnchor="119.0" AnchorPane.rightAnchor="48.0" />
                                     <Label layoutX="47.0" layoutY="477.0" text="Giới Tính:" AnchorPane.bottomAnchor="85.39999999999998" AnchorPane.rightAnchor="273.0" />
-                                    <ComboBox fx:id="banhang_gt1" layoutX="167.0" layoutY="472.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" />
+                                    <ComboBox fx:id="banhang_gt1" layoutX="167.0" layoutY="472.0" prefHeight="26.0" prefWidth="154.0" promptText="chọn" AnchorPane.bottomAnchor="82.0" AnchorPane.rightAnchor="49.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ac_hoadon" layoutX="11.0" prefHeight="600.0" prefWidth="869.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ac_hoadon" layoutX="11.0" prefHeight="600.0" prefWidth="869.0" stylesheets="@mainFormDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="radius" />
                               <String fx:value="shadow" />

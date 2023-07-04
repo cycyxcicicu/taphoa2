@@ -8,7 +8,7 @@
     
 }
 .head-label{
-    -fx-border-color: #286155;
+    -fx-border-color: #FF6666;
     -fx-border-width: 0 0 0 3px;
     -fx-padding: 0 0 0 5px;
 }
@@ -20,7 +20,7 @@
 .textfield{
     -fx-background-color:#fff;
     -fx-background-radius:8px;
-    -fx-border-color: #5C469C;
+    -fx-border-color: #FF6666;
     -fx-border-width:0px 0px .8px .0px;
     -fx-font-family: "Tahoma";
     -fx-font-size: 13px
@@ -30,7 +30,7 @@
     -fx-border-width:0px 0px 1.8px .0px;
 }
 .login-btn{
-    -fx-background-color:#5C469C;
+    -fx-background-color:#911e48;
     -fx-background-radius:8px;
     -fx-cursor:hand;
     -fx-text-fill:#fff;

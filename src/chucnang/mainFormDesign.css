@@ -23,10 +23,10 @@ and open the template in the editor.
 
 .nav-btn{
     -fx-background-color: linear-gradient(#F2BED1, #FDCEDF);
-    -fx-border-color: #fff;
+    -fx-border-color: #6e1616;
     -fx-border-width: .4px;
     -fx-cursor: hand;
-    -fx-text-fill: #fff;
+    -fx-text-fill: #6e1616;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
@@ -91,4 +91,10 @@ and open the template in the editor.
 }
 .btn:hover{
     -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f); 
+}
+.tt{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0C134F;
+    
 }

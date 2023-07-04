@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +40,7 @@ public class cardhanghoaController implements Initializable{
 
     @FXML
     private Spinner<Integer> hanghoa_spinner;
+    
     
     private hanghoadata hhdata;
     private Image image;
@@ -143,7 +145,7 @@ public class cardhanghoaController implements Initializable{
                     alert.showAndWait();
                 } else {
                 	
-                	 
+                	if (mainListener != null) {
                 	
                     String insertData = "INSERT INTO tbl_hoa_don "
                             + "(ma_hoa_don,ma_khach_hang, gia_tien, so_luong_ban, ngay_xuat_hoa_don, ma_nhan_vien,ma_hang_hoa,phuong_thuc) "
@@ -162,7 +164,7 @@ public class cardhanghoaController implements Initializable{
                     prepare.setString(7,masanpham1);
                     
                     prepare.setString(8,getData.phuongthuc);
-                    System.out.println(getData.phuongthuc);
+                    
                     prepare.executeUpdate();
                     
                     int upStock = checkStck - qty;
@@ -184,7 +186,8 @@ public class cardhanghoaController implements Initializable{
                     alert.showAndWait();
                     
                    mForm.menuGetTotal();
-                   
+                   mainListener.performMainFunction();
+                    }
                    
                 }
                 
@@ -196,7 +199,10 @@ public class cardhanghoaController implements Initializable{
         
 
     }
-
+    private MainFXMLListener mainListener;
+    public void setMainFXMLListener(MainFXMLListener listener) {
+        this.mainListener = listener;
+    }
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

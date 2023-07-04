@@ -13,7 +13,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chucnang.loginController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
          <children>
             <AnchorPane fx:id="ac_nhanvien" layoutX="300.0" prefHeight="400.0" prefWidth="300.0" styleClass="right-form" stylesheets="@application.css">
                <children>
@@ -25,7 +25,7 @@
                   </Button>
                   <TextField fx:id="username" layoutX="54.0" layoutY="177.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@application.css" />
                   <PasswordField fx:id="password" layoutX="52.0" layoutY="230.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@application.css" />
-                  <Label layoutX="54.0" layoutY="88.0" styleClass="head-label" stylesheets="@application.css" text="Nhân Viên">
+                  <Label layoutX="54.0" layoutY="88.0" styleClass="head-label" stylesheets="@application.css" text="Nhân Viên" textFill="#911e48">
                      <font>
                         <Font name="Times New Roman Bold" size="24.0" />
                      </font>
@@ -37,7 +37,7 @@
                   <Button fx:id="loginBtn1" layoutX="135.0" layoutY="287.0" mnemonicParsing="false" onAction="#btnlogin1" styleClass="login-btn" stylesheets="@application.css" text="Login" />
                   <TextField fx:id="username1" layoutX="54.0" layoutY="177.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@application.css" />
                   <PasswordField fx:id="password1" layoutX="52.0" layoutY="230.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@application.css" />
-                  <Label layoutX="54.0" layoutY="88.0" styleClass="head-label" stylesheets="@application.css" text="Chủ Tiệm">
+                  <Label layoutX="54.0" layoutY="88.0" styleClass="head-label" stylesheets="@application.css" text="Chủ Tiệm" textFill="#911e48">
                      <font>
                         <Font name="Times New Roman Bold" size="24.0" />
                      </font>
@@ -51,8 +51,8 @@
                         <Image url="@dao.jpg" />
                      </image>
                   </ImageView>
-                  <FontAwesomeIconView glyphName="SHOPPING_CART" layoutX="118.0" layoutY="126.0" size="70" />
-                  <Label layoutX="50.0" layoutY="143.0" text="Cửa Hàng Tạp Hóa">
+                  <FontAwesomeIconView fill="#fafafa" glyphName="SHOPPING_CART" layoutX="118.0" layoutY="126.0" size="70" />
+                  <Label layoutX="50.0" layoutY="143.0" text="Cửa Hàng Tạp Hóa" textFill="#911e48">
                      <font>
                         <Font name="Times New Roman Bold" size="24.0" />
                      </font>

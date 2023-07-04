@@ -63,6 +63,9 @@ public class hoadondata {
     public int getSoluongban() {
         return soluongban;
     }
+    public void setSoluongban(Integer soluongban) {
+		this.soluongban = soluongban;
+	}
 
     public Date getNgayxuathoadon() {
         return ngayxuathoadon;
